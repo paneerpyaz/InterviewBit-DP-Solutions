@@ -16,27 +16,17 @@ int Solution::cnttrue(string a) {
             int rt=DP(k+1,j,1,DP);
             int lf=DP(i,k-1,0,DP);
             int rf=DP(k+1,j,0,DP);
-            if(need){
-                if(a[k]=='|'){
-                    ans=(ans+(lt*rt)%m+(lt*rf)%m+(lf*rt)%m)%m;
-                }
-                else if(a[k]=='&'){
-                    ans=(ans+(lt*rt)%m)%m;
-                }
-                else{
-                    ans=(ans+(lt*rf)%m+(lf*rt)%m)%m;
-                }
+            if(a[k]=='|'){
+                if(need) ans=(ans+(lt*rt)%m+(lt*rf)%m+(lf*rt)%m)%m;
+                else ans=(ans+(lf*rf)%m)%m;
+            }
+            else if(a[k]=='&'){
+                if(need) ans=(ans+(lt*rt)%m)%m;
+                else ans=(ans+(lf*rt)%m+(lf*rf)%m+(lt*rf)%m);
             }
             else{
-                if(a[k]=='|'){
-                    ans=(ans+(lf*rf)%m)%m;
-                }
-                else if(a[k]=='&'){
-                    ans=(ans+(lf*rt)%m+(lf*rf)%m+(lt*rf)%m);
-                }
-                else{
-                    ans=(ans+(lt*rt)%m+(lf*rf)%m)%m;
-                }
+                if(need) ans=(ans+(lt*rf)%m+(lf*rt)%m)%m;
+                else ans=(ans+(lt*rt)%m+(lf*rf)%m)%m;
             }
         }
         return dp[i][j][need]=ans;
